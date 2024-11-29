@@ -1,0 +1,329 @@
+
+.ai-content {
+  --background: url('/images/AIPage.jpg') no-repeat center center fixed;
+  --background-size: cover;
+}
+
+.ai-container {
+  padding: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.meal-generator-card {
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.generator-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.ai-icon-container {
+  width: 80px;
+  height: 80px;
+  background: var(--ion-color-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.ai-icon {
+  font-size: 40px;
+  color: white;
+}
+
+.generator-text {
+  color: var(--ion-color-medium);
+  margin: 1rem 0;
+  line-height: 1.5;
+  font-size: 1.1rem;
+}
+
+.generate-button {
+  --border-radius: 12px;
+  margin-top: 1rem;
+  height: 48px;
+  font-weight: 500;
+}
+
+.recipe-container {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.recipe-card {
+  border-radius: 16px;
+  margin-bottom: 1rem;
+}
+
+.recipe-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.section-title {
+  font-weight: 600;
+  color: var(--ion-color-dark);
+  margin: 1.5rem 0 1rem;
+}
+
+.ingredients-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.ingredient-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background: var(--ion-color-light);
+  border-radius: 8px;
+}
+
+.ingredient-name {
+  font-weight: 500;
+}
+
+.ingredient-quantity {
+  color: blue;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.button-group ion-button {
+  flex: 1;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ion-color-light);
+}
+
+.regenerate-button {
+  margin-top: 1rem;
+  --border-radius: 12px;
+}
+
+/* Modals */
+.instructions-modal, .nutrition-modal {
+  --height: 90%;
+  --border-radius: 16px 16px 0 0;
+}
+
+.instructions-content, .nutrition-content {
+  padding: 1rem;
+}
+
+.instruction-step {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: var(--ion-color-light);
+  border-radius: 12px;
+}
+
+.step-number {
+  width: 24px;
+  height: 24px;
+  background: var(--ion-color-primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.step-text {
+  flex: 1;
+  line-height: 1.5;
+}
+
+/* Nutrition Modal Styles */
+.calories-circle {
+  width: 150px;
+  height: 150px;
+  margin: 2rem auto;
+  background: var(--ion-color-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.circle-content {
+  text-align: center;
+}
+
+.circle-value {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.circle-label {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.macros-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.macro-item {
+  text-align: center;
+  padding: 1rem;
+  background: var(--ion-color-light);
+  border-radius: 12px;
+}
+
+.macro-item ion-icon {
+  font-size: 24px;
+  color: var(--ion-color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.macro-label {
+  color: var(--ion-color-medium);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.macro-value {
+  font-weight: 600;
+  color: var(--ion-color-dark);
+  font-size: 1.2rem;
+}
+
+.allergens-section {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ion-color-light);
+}
+
+.allergens-section h3 {
+  color: var(--ion-color-dark);
+  margin-bottom: 1rem;
+}
+
+.allergens-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+  .ai-container {
+    padding: 0.5rem;
+  }
+
+  .generator-content {
+    padding: 1rem;
+  }
+
+  .macros-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .recipe-meta {
+    justify-content: center;
+  }
+
+  .action-buttons {
+    padding-top: 0.5rem;
+  }
+
+  .calories-circle {
+    width: 120px;
+    height: 120px;
+  }
+
+  .circle-value {
+    font-size: 1.5rem;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .ai-content {
+    --background: var(--ion-color-dark);
+  }
+
+  .ingredient-item, .instruction-step, .macro-item {
+    background: rgba(var(--ion-color-light-rgb), 0.1);
+  }
+
+  .generator-text, .ingredient-quantity, .macro-label {
+    color: rgba(var(--ion-color-light-rgb), 0.7);
+  }
+
+  .section-title, .macro-value {
+    color: var(--ion-color-light);
+  }
+}
+
+/* Custom Loading Spinner */
+ion-spinner {
+  width: 40px;
+  height: 40px;
+  color: white;
+}
+
+/* Custom Modal Animations */
+.modal-enter {
+  transform: translateY(100%);
+}
+
+.modal-enter-active {
+  transform: translateY(0);
+  transition: transform 300ms ease-out;
+}
+
+.modal-exit {
+  transform: translateY(0);
+}
+
+.modal-exit-active {
+  transform: translateY(100%);
+  transition: transform 300ms ease-in;
+}
