@@ -2,13 +2,24 @@
 .welcome-header {
     --background: transparent;
   }
+
+  .welcome-type-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    padding: 2rem;
+    height: 100%;
+    gap: 2rem;
+  }
   
   .welcome-header ion-toolbar {
     --background: transparent;
   }
   
   .welcome-content {
-    --background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+    --background: url('/images/welcome-bg.jpg');
   }
   
   .welcome-container {

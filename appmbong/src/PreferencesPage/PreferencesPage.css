@@ -2,7 +2,7 @@
 /* Base Styles */
 
 .preferences-content {
-  --background: url('/images/preferences-bg.jpg') no-repeat center center fixed;
+  --background: url('/images/preferences-bg.jpg');
   --background-size: cover;
 }
 

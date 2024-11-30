@@ -1,6 +1,6 @@
 
 .ai-content {
-  --background: url('/images/AIPage.jpg') no-repeat center center fixed;
+  --background: url('/images/AIPage.jpg');
   --background-size: cover;
 }
 

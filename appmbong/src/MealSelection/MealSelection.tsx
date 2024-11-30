@@ -112,7 +112,7 @@ const MealSelection: React.FC = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent>
+      <IonContent className="meal-selection-ioncontent">
         {!showRecipes ? (
           <div className="meal-selection-container">
             <IonCard className="meal-type-card">
