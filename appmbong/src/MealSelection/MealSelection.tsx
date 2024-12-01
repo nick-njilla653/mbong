@@ -24,14 +24,16 @@ import {
   IonAlert,
   IonModal,
 } from '@ionic/react';
-import { 
-  sunnyOutline, 
-  restaurantOutline, 
+import {
+  sunnyOutline,
+  restaurantOutline,
   moonOutline,
   checkmarkCircle,
   closeCircle,
   searchOutline,
-  nutrition
+  nutrition,
+  timeOutline,
+  peopleOutline
 } from 'ionicons/icons';
 import './MealSelection.css';
 
@@ -45,7 +47,8 @@ interface Ingredient {
 interface Recipe {
   id: number;
   name: string;
-  ingredients: Array<{name: string, quantity: string}>;
+  image: string;
+  ingredients: Array<{ name: string, quantity: string }>;
   nutrition: {
     calories: number;
     proteins: number;
@@ -55,6 +58,7 @@ interface Recipe {
   instructions: string[];
   preparationTime: string;
   servings: number;
+  mealType: string;
 }
 
 const MealSelection: React.FC = () => {
@@ -67,16 +71,151 @@ const MealSelection: React.FC = () => {
   const [showRecipeModal, setShowRecipeModal] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
 
-  // Exemple d'ingrédients
+  // Base de données d'ingrédients
   const ingredients: Ingredient[] = [
+    // Céréales et féculents
     { id: 1, name: 'Riz', image: '/api/placeholder/150/150', category: 'Céréales' },
-    { id: 2, name: 'Poulet', image: '/api/placeholder/150/150', category: 'Protéines' },
-    { id: 3, name: 'Tomates', image: '/api/placeholder/150/150', category: 'Légumes' },
-    // Ajoutez plus d'ingrédients
+    { id: 2, name: 'Pain complet', image: '/api/placeholder/150/150', category: 'Céréales' },
+    { id: 3, name: 'Avoine', image: '/api/placeholder/150/150', category: 'Céréales' },
+    { id: 4, name: 'Quinoa', image: '/api/placeholder/150/150', category: 'Céréales' },
+
+    // Protéines
+    { id: 5, name: 'Poulet', image: '/api/placeholder/150/150', category: 'Protéines' },
+    { id: 6, name: 'Œufs', image: '/api/placeholder/150/150', category: 'Protéines' },
+    { id: 7, name: 'Saumon', image: '/api/placeholder/150/150', category: 'Protéines' },
+    { id: 8, name: 'Tofu', image: '/api/placeholder/150/150', category: 'Protéines' },
+
+    // Légumes
+    { id: 9, name: 'Tomates', image: '/api/placeholder/150/150', category: 'Légumes' },
+    { id: 10, name: 'Épinards', image: '/api/placeholder/150/150', category: 'Légumes' },
+    { id: 11, name: 'Brocoli', image: '/api/placeholder/150/150', category: 'Légumes' },
+    { id: 12, name: 'Carottes', image: '/api/placeholder/150/150', category: 'Légumes' },
+
+    // Fruits
+    { id: 13, name: 'Banane', image: '/api/placeholder/150/150', category: 'Fruits' },
+    { id: 14, name: 'Pomme', image: '/api/placeholder/150/150', category: 'Fruits' },
+    { id: 15, name: 'Fraises', image: '/api/placeholder/150/150', category: 'Fruits' },
+
+    // Produits laitiers
+    { id: 16, name: 'Yaourt', image: '/api/placeholder/150/150', category: 'Produits laitiers' },
+    { id: 17, name: 'Fromage', image: '/api/placeholder/150/150', category: 'Produits laitiers' },
+    { id: 18, name: 'Lait', image: '/api/placeholder/150/150', category: 'Produits laitiers' }
+  ];
+
+  // Base de données de recettes
+  const recipesDatabase: Recipe[] = [
+    // Petit déjeuner
+    {
+      id: 1,
+      name: "Bol de porridge aux fruits",
+      image: '/api/placeholder/300/200',
+      mealType: "breakfast",
+      ingredients: [
+        { name: "Avoine", quantity: "50g" },
+        { name: "Lait", quantity: "200ml" },
+        { name: "Banane", quantity: "1" },
+        { name: "Fraises", quantity: "5" }
+      ],
+      nutrition: {
+        calories: 350,
+        proteins: 12,
+        carbs: 55,
+        fats: 8
+      },
+      instructions: [
+        "Faire chauffer le lait",
+        "Ajouter l'avoine et cuire 3 minutes",
+        "Garnir avec les fruits coupés"
+      ],
+      preparationTime: "10 min",
+      servings: 1
+    },
+    {
+      id: 2,
+      name: "Toast aux œufs et avocat",
+      image: '/api/placeholder/300/200',
+      mealType: "breakfast",
+      ingredients: [
+        { name: "Pain complet", quantity: "2 tranches" },
+        { name: "Œufs", quantity: "2" },
+        { name: "Avocat", quantity: "1/2" },
+        { name: "Tomates", quantity: "1" }
+      ],
+      nutrition: {
+        calories: 400,
+        proteins: 18,
+        carbs: 35,
+        fats: 22
+      },
+      instructions: [
+        "Toaster le pain",
+        "Faire cuire les œufs au plat",
+        "Écraser l'avocat et l'étaler sur le pain",
+        "Ajouter les œufs et les tomates en tranches"
+      ],
+      preparationTime: "15 min",
+      servings: 1
+    },
+
+    // Déjeuner
+    {
+      id: 3,
+      name: "Bowl de quinoa au poulet",
+      image: '/api/placeholder/300/200',
+      mealType: "lunch",
+      ingredients: [
+        { name: "Quinoa", quantity: "100g" },
+        { name: "Poulet", quantity: "150g" },
+        { name: "Brocoli", quantity: "100g" },
+        { name: "Carottes", quantity: "1" }
+      ],
+      nutrition: {
+        calories: 550,
+        proteins: 35,
+        carbs: 65,
+        fats: 15
+      },
+      instructions: [
+        "Cuire le quinoa",
+        "Griller le poulet assaisonné",
+        "Cuire les légumes à la vapeur",
+        "Assembler le bowl"
+      ],
+      preparationTime: "25 min",
+      servings: 1
+    },
+
+    // Dîner
+    {
+      id: 4,
+      name: "Saumon aux légumes verts",
+      image: '/api/placeholder/300/200',
+      mealType: "dinner",
+      ingredients: [
+        { name: "Saumon", quantity: "180g" },
+        { name: "Épinards", quantity: "100g" },
+        { name: "Brocoli", quantity: "100g" },
+        { name: "Riz", quantity: "60g" }
+      ],
+      nutrition: {
+        calories: 480,
+        proteins: 32,
+        carbs: 45,
+        fats: 20
+      },
+      instructions: [
+        "Cuire le riz",
+        "Faire cuire le saumon au four",
+        "Préparer les légumes à la vapeur",
+        "Dresser l'assiette"
+      ],
+      preparationTime: "30 min",
+      servings: 1
+    }
   ];
 
   const filterIngredients = () => {
-    return ingredients.filter(ing => 
+    return ingredients.filter(ing =>
       ing.name.toLowerCase().includes(searchText.toLowerCase())
     );
   };
@@ -90,15 +229,93 @@ const MealSelection: React.FC = () => {
   };
 
   const searchRecipes = () => {
-    // Simulation de recherche de recettes
-    const foundRecipes: Recipe[] = []; // Ici viendrait votre logique de recherche
-    
+    if (!mealType || selectedIngredients.length === 0) return;
+
+    // Filtrer les recettes selon le type de repas
+    let foundRecipes = recipesDatabase.filter(recipe =>
+      recipe.mealType === mealType
+    );
+
+    // Filtrer les recettes qui contiennent au moins un des ingrédients sélectionnés
+    foundRecipes = foundRecipes.filter(recipe =>
+      selectedIngredients.some(selectedIng =>
+        recipe.ingredients.some(recipeIng =>
+          recipeIng.name.toLowerCase() === selectedIng.toLowerCase()
+        )
+      )
+    );
+
     if (foundRecipes.length === 0) {
       setShowNoRecipesAlert(true);
     } else {
       setRecipes(foundRecipes);
       setShowRecipes(true);
     }
+  };
+
+  // Rendu de la recette dans le modal
+  const renderRecipeModal = () => {
+    if (!selectedRecipe) return null;
+
+    return (
+      <div className="recipe-modal">
+        <img src={selectedRecipe.image} alt={selectedRecipe.name} className="recipe-image" />
+        <h2>{selectedRecipe.name}</h2>
+
+        <div className="recipe-info">
+          <div className="info-item">
+            <IonIcon icon={timeOutline} />
+            <span>{selectedRecipe.preparationTime}</span>
+          </div>
+          <div className="info-item">
+            <IonIcon icon={peopleOutline} />
+            <span>{selectedRecipe.servings} portion(s)</span>
+          </div>
+        </div>
+
+        <div className="nutrition-info">
+          <h3>Valeurs nutritionnelles</h3>
+          <div className="nutrition-grid">
+            <div className="nutrition-item">
+              <span className="value">{selectedRecipe.nutrition.calories}</span>
+              <span className="label">Calories</span>
+            </div>
+            <div className="nutrition-item">
+              <span className="value">{selectedRecipe.nutrition.proteins}g</span>
+              <span className="label">Protéines</span>
+            </div>
+            <div className="nutrition-item">
+              <span className="value">{selectedRecipe.nutrition.carbs}g</span>
+              <span className="label">Glucides</span>
+            </div>
+            <div className="nutrition-item">
+              <span className="value">{selectedRecipe.nutrition.fats}g</span>
+              <span className="label">Lipides</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="ingredients-section">
+          <h3>Ingrédients</h3>
+          <ul>
+            {selectedRecipe.ingredients.map((ing, index) => (
+              <li key={index}>
+                {ing.name}: {ing.quantity}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="instructions-section">
+          <h3>Instructions</h3>
+          <ol>
+            {selectedRecipe.instructions.map((step, index) => (
+              <li key={index}>{step}</li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -152,7 +369,7 @@ const MealSelection: React.FC = () => {
 
                     <div className="selected-ingredients">
                       {selectedIngredients.map(ing => (
-                        <IonChip 
+                        <IonChip
                           key={ing}
                           onClick={() => toggleIngredient(ing)}
                           className="selected-ingredient-chip"
@@ -167,10 +384,9 @@ const MealSelection: React.FC = () => {
                       <IonRow>
                         {filterIngredients().map(ingredient => (
                           <IonCol size="6" size-md="4" key={ingredient.id}>
-                            <div 
-                              className={`ingredient-item ${
-                                selectedIngredients.includes(ingredient.name) ? 'selected' : ''
-                              }`}
+                            <div
+                              className={`ingredient-item ${selectedIngredients.includes(ingredient.name) ? 'selected' : ''
+                                }`}
                               onClick={() => toggleIngredient(ingredient.name)}
                             >
                               <img src={ingredient.image} alt={ingredient.name} />
@@ -202,7 +418,7 @@ const MealSelection: React.FC = () => {
         ) : (
           <div className="recipes-container">
             {recipes.map(recipe => (
-              <IonCard 
+              <IonCard
                 key={recipe.id}
                 className="recipe-card"
                 onClick={() => {
@@ -210,7 +426,25 @@ const MealSelection: React.FC = () => {
                   setShowRecipeModal(true);
                 }}
               >
-                {/* Contenu de la carte de recette */}
+                <img src={recipe.image} alt={recipe.name} className="recipe-image" />
+                <IonCardHeader>
+                  <IonCardTitle>{recipe.name}</IonCardTitle>
+                </IonCardHeader>
+                <IonCardContent>
+                  <div className="recipe-card-info">
+                    <div className="info-item">
+                      <IonIcon icon={timeOutline} />
+                      <span>{recipe.preparationTime}</span>
+                    </div>
+                    <div className="info-item">
+                      <IonIcon icon={peopleOutline} />
+                      <span>{recipe.servings} portion(s)</span>
+                    </div>
+                  </div>
+                  <div className="recipe-card-nutrition">
+                    <span>{recipe.nutrition.calories} kcal</span>
+                  </div>
+                </IonCardContent>
               </IonCard>
             ))}
           </div>
@@ -240,7 +474,7 @@ const MealSelection: React.FC = () => {
           isOpen={showRecipeModal}
           onDidDismiss={() => setShowRecipeModal(false)}
         >
-          {/* Contenu détaillé de la recette */}
+          {renderRecipeModal()}
         </IonModal>
       </IonContent>
     </IonPage>

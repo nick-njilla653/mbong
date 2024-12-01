@@ -2,22 +2,53 @@
 .meal-selection-ioncontent{
   --background: url('/images/meal-bg.jpg');
 }
+
 .meal-selection-container {
   padding: 1rem;
   max-width: 800px;
   margin: 0 auto;
 }
 
-.meal-type-card {
-  margin-bottom: 1.5rem;
+/* Cards */
+.meal-type-card,
+.ingredients-card {
   border-radius: 16px;
+  margin-bottom: 1.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
+.recipe-card {
+  width: 100%;
+}
 
+.recipe-card .recipe-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.recipe-card-info {
+  display: flex;
+  border-radius: 16px;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.recipe-card-info .info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ion-color-medium);
+}
+
+.recipe-card-nutrition {
+  color: var(--ion-color-primary);
+  font-weight: 500;
+}
+/* Meal Type Segment */
 ion-segment {
-  --background: var(--ion-color-light);
-  border-radius: 10px;
-  padding: 5px;
+  padding: 8px;
+  background: var(--ion-color-light);
+  border-radius: 12px;
 }
 
 ion-segment-button {
@@ -25,24 +56,30 @@ ion-segment-button {
   --color-checked: white;
   --indicator-color: transparent;
   border-radius: 8px;
-  text-transform: none;
-  min-height: 40px;
+  min-height: 45px;
+  font-size: 0.9rem;
 }
 
 ion-segment-button ion-icon {
+  font-size: 1.4rem;
   margin-bottom: 4px;
 }
 
-.ingredients-card {
-  border-radius: 16px;
-  margin-bottom: 1.5rem;
+/* Search bar */
+ion-searchbar {
+  --box-shadow: none;
+  --background: var(--ion-color-light);
+  --border-radius: 10px;
+  padding: 0;
+  margin-bottom: 1rem;
 }
 
+/* Selected Ingredients */
 .selected-ingredients {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 1rem 0;
+  gap: 8px;
+  margin-bottom: 1rem;
 }
 
 .selected-ingredient-chip {
@@ -50,8 +87,9 @@ ion-segment-button ion-icon {
   --color: white;
 }
 
+/* Ingredients Grid */
 .ingredients-grid {
-  margin-top: 1rem;
+  padding: 0;
 }
 
 .ingredient-item {
@@ -61,6 +99,7 @@ ion-segment-button ion-icon {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-bottom: 1rem;
 }
 
 .ingredient-item img {
@@ -69,20 +108,20 @@ ion-segment-button ion-icon {
   object-fit: cover;
 }
 
+.ingredient-item.selected {
+  border: 2px solid var(--ion-color-primary);
+}
+
 .ingredient-name {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 0.5rem;
+  padding: 8px;
   background: rgba(0, 0, 0, 0.7);
   color: white;
   font-size: 0.9rem;
   text-align: center;
-}
-
-.ingredient-item.selected {
-  border: 2px solid var(--ion-color-primary);
 }
 
 .selected-overlay {
@@ -102,39 +141,198 @@ ion-segment-button ion-icon {
   color: white;
 }
 
+/* Search Button */
 .search-recipes-button {
-  margin: 2rem 1rem;
+  margin: 1rem;
   --border-radius: 12px;
   height: 48px;
 }
 
+/* Recipes Container */
 .recipes-container {
   padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
 }
 
 .recipe-card {
-  margin-bottom: 1rem;
   border-radius: 16px;
+  overflow: hidden;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
 
 .recipe-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
 }
 
-/* Modal styles */
-ion-modal {
-  --height: 90%;
-  --border-radius: 16px;
+/* Recipe Modal */
+.recipe-modal {
+  padding: 1.5rem;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
+.recipe-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.recipe-modal h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+  color: var(--ion-color-dark);
+}
+
+.recipe-info {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ion-color-medium);
+}
+
+.info-item ion-icon {
+  font-size: 1.2rem;
+}
+
+/* Nutrition Info */
+.nutrition-info {
+  background: var(--ion-color-light);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.nutrition-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.nutrition-item {
+  text-align: center;
+}
+
+.nutrition-item .value {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ion-color-primary);
+}
+
+.nutrition-item .label {
+  font-size: 0.9rem;
+  color: var(--ion-color-medium);
+}
+
+/* Ingredients Section */
+.ingredients-section {
+  margin-bottom: 1.5rem;
+}
+
+.ingredients-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ingredients-section li {
+  padding: 0.8rem;
+  border-bottom: 1px solid var(--ion-color-light);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Instructions Section */
+.instructions-section ol {
+  padding-left: 1.2rem;
+  margin: 0;
+}
+
+.instructions-section li {
+  margin-bottom: 1rem;
+  line-height: 1.5;
+  color: var(--ion-color-dark);
+}
+
+/* Section Headers */
+.recipe-modal h3 {
+  font-size: 1.2rem;
+  color: var(--ion-color-dark);
+  margin: 0 0 1rem 0;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .meal-selection-ioncontent {
+    --background: var(--ion-color-dark);
+  }
+
+  .recipe-modal h2,
+  .recipe-modal h3 {
+    color: var(--ion-color-light);
+  }
+
+  .ingredients-section li {
+    border-color: rgba(var(--ion-color-light-rgb), 0.1);
+  }
+
+  .nutrition-info {
+    background: rgba(var(--ion-color-light-rgb), 0.1);
+  }
+}
+
+/* Responsive Design */
 @media (max-width: 576px) {
   .meal-selection-container {
     padding: 0.5rem;
   }
 
+  .nutrition-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   ion-segment-button {
     font-size: 0.8rem;
   }
+
+  .recipe-modal {
+    padding: 1rem;
+  }
+
+  .recipe-image {
+    height: 150px;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.recipe-card {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.ingredient-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
