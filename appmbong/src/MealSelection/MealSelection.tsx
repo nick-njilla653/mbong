@@ -74,32 +74,32 @@ const MealSelection: React.FC = () => {
   // Base de données d'ingrédients
   const ingredients: Ingredient[] = [
     // Céréales et féculents
-    { id: 1, name: 'Riz', image: '/api/placeholder/150/150', category: 'Céréales' },
-    { id: 2, name: 'Pain complet', image: '/api/placeholder/150/150', category: 'Céréales' },
-    { id: 3, name: 'Avoine', image: '/api/placeholder/150/150', category: 'Céréales' },
-    { id: 4, name: 'Quinoa', image: '/api/placeholder/150/150', category: 'Céréales' },
+    { id: 1, name: 'Riz', image: 'public/images/riz.jpg', category: 'Céréales' },
+    { id: 2, name: 'Pain complet', image: 'public/images/pain-complet.jpg', category: 'Céréales' },
+    { id: 3, name: 'Avoine', image: 'public/images/avoine.jpg', category: 'Céréales' },
+    { id: 4, name: 'Quinoa', image: 'public/images/quinoa.jpg', category: 'Céréales' },
 
     // Protéines
-    { id: 5, name: 'Poulet', image: '/api/placeholder/150/150', category: 'Protéines' },
-    { id: 6, name: 'Œufs', image: '/api/placeholder/150/150', category: 'Protéines' },
-    { id: 7, name: 'Saumon', image: '/api/placeholder/150/150', category: 'Protéines' },
-    { id: 8, name: 'Tofu', image: '/api/placeholder/150/150', category: 'Protéines' },
+    { id: 5, name: 'Poulet', image: 'public/images/poulet.jpg', category: 'Protéines' },
+    { id: 6, name: 'Œufs', image: 'public/images/oeufs.jpg', category: 'Protéines' },
+    { id: 7, name: 'Saumon', image: 'public/images/saumon.jpg', category: 'Protéines' },
+    { id: 8, name: 'Tofu', image: 'public/images/tofu.jpg', category: 'Protéines' },
 
     // Légumes
-    { id: 9, name: 'Tomates', image: '/api/placeholder/150/150', category: 'Légumes' },
-    { id: 10, name: 'Épinards', image: '/api/placeholder/150/150', category: 'Légumes' },
-    { id: 11, name: 'Brocoli', image: '/api/placeholder/150/150', category: 'Légumes' },
-    { id: 12, name: 'Carottes', image: '/api/placeholder/150/150', category: 'Légumes' },
+    { id: 9, name: 'Tomates', image: 'public/images/tomates.jpg', category: 'Légumes' },
+    { id: 10, name: 'Épinards', image: 'public/images/epinards.jpg', category: 'Légumes' },
+    { id: 11, name: 'Brocoli', image: 'public/images/brocoli.jpg', category: 'Légumes' },
+    { id: 12, name: 'Carottes', image: 'public/images/carottes.jpg', category: 'Légumes' },
 
     // Fruits
-    { id: 13, name: 'Banane', image: '/api/placeholder/150/150', category: 'Fruits' },
-    { id: 14, name: 'Pomme', image: '/api/placeholder/150/150', category: 'Fruits' },
-    { id: 15, name: 'Fraises', image: '/api/placeholder/150/150', category: 'Fruits' },
+    { id: 13, name: 'Banane', image: 'public/images/banane.jpg', category: 'Fruits' },
+    { id: 14, name: 'Pomme', image: 'public/images/pomme.jpg', category: 'Fruits' },
+    { id: 15, name: 'Fraises', image: 'public/images/fraises.jpg', category: 'Fruits' },
 
     // Produits laitiers
-    { id: 16, name: 'Yaourt', image: '/api/placeholder/150/150', category: 'Produits laitiers' },
-    { id: 17, name: 'Fromage', image: '/api/placeholder/150/150', category: 'Produits laitiers' },
-    { id: 18, name: 'Lait', image: '/api/placeholder/150/150', category: 'Produits laitiers' }
+    { id: 16, name: 'Yaourt', image: 'public/images/yaourt.jpg', category: 'Produits laitiers' },
+    { id: 17, name: 'Fromage', image: 'public/images/fromage.jpg', category: 'Produits laitiers' },
+    { id: 18, name: 'Lait', image: 'public/images/lait.jpg', category: 'Produits laitiers' }
   ];
 
   // Base de données de recettes
@@ -108,7 +108,7 @@ const MealSelection: React.FC = () => {
     {
       id: 1,
       name: "Bol de porridge aux fruits",
-      image: '/api/placeholder/300/200',
+      image: 'public/images/Bol-de-porridge-aux-fruits.jpg',
       mealType: "breakfast",
       ingredients: [
         { name: "Avoine", quantity: "50g" },
@@ -133,7 +133,7 @@ const MealSelection: React.FC = () => {
     {
       id: 2,
       name: "Toast aux œufs et avocat",
-      image: '/api/placeholder/300/200',
+      image: 'public/images/Toast-aux-œufs-et-avocat.jpg',
       mealType: "breakfast",
       ingredients: [
         { name: "Pain complet", quantity: "2 tranches" },
@@ -161,7 +161,7 @@ const MealSelection: React.FC = () => {
     {
       id: 3,
       name: "Bowl de quinoa au poulet",
-      image: '/api/placeholder/300/200',
+      image: 'public/images/Bowl-de-quinoa-au-poulet.jpg',
       mealType: "lunch",
       ingredients: [
         { name: "Quinoa", quantity: "100g" },
@@ -189,7 +189,7 @@ const MealSelection: React.FC = () => {
     {
       id: 4,
       name: "Saumon aux légumes verts",
-      image: '/api/placeholder/300/200',
+      image: 'public/images/Saumon-aux-légumes-verts.jpg',
       mealType: "dinner",
       ingredients: [
         { name: "Saumon", quantity: "180g" },
