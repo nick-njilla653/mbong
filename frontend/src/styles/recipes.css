@@ -1,0 +1,45 @@
+/* src/styles/recipes.css */
+/* Pour RecipeGrid */
+.relative { position: relative; }
+.absolute { position: absolute; }
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+.overflow-hidden { overflow: hidden; }
+
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+
+.h-48 { height: 12rem; }
+.h-full { height: 100%; }
+.w-full { width: 100%; }
+.w-12 { width: 3rem; }
+.h-12 { height: 3rem; }
+.w-6 { width: 1.5rem; }
+.h-6 { height: 1.5rem; }
+.h-2 { height: 0.5rem; }
+
+.object-cover { object-fit: cover; }
+.bg-gray-200 { background-color: rgb(229, 231, 235); }
+.bg-black { background-color: rgb(0, 0, 0); }
+.bg-opacity-50 { background-color: rgba(0, 0, 0, 0.5); }
+
+.text-white { color: rgb(255, 255, 255); }
+.text-4xl { font-size: 2.25rem; }
+.text-lg { font-size: 1.125rem; }
+.text-sm { font-size: 0.875rem; }
+
+.font-bold { font-weight: 700; }
+
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+
+.opacity-75 { opacity: 0.75; }
+.cursor-pointer { cursor: pointer; }
+
+.transition-transform { transition-property: transform; }
+.duration-200 { transition-duration: 200ms; }
+.hover\:scale-105:hover { transform: scale(1.05); }
+
+/* Pour RecipesPage */
+.h-full { height: 100%; }

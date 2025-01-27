@@ -1,0 +1,62 @@
+* src/styles/LearningPath.css */
+.bg-gray-50 { background-color: rgb(249, 250, 251); }
+.p-4 { padding: 1rem; }
+.space-y-4 > * + * { margin-top: 1rem; }
+
+.opacity-50 { opacity: 0.5; }
+.transition-all { transition-property: all; }
+
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.mb-4 { margin-bottom: 1rem; }
+
+.text-xl { font-size: 1.25rem; }
+.font-bold { font-weight: 700; }
+.text-gray-500 { color: rgb(107, 114, 128); }
+
+.w-6 { width: 1.5rem; }
+.h-6 { height: 1.5rem; }
+
+.space-y-3 > * + * { margin-top: 0.75rem; }
+.p-3 { padding: 0.75rem; }
+.rounded-lg { border-radius: 0.5rem; }
+
+.hover\:bg-gray-100:hover { background-color: rgb(243, 244, 246); }
+.cursor-pointer { cursor: pointer; }
+.cursor-not-allowed { cursor: not-allowed; }
+
+.w-8 { width: 2rem; }
+.h-8 { height: 2rem; }
+.rounded-full { border-radius: 9999px; }
+.bg-green-100 { background-color: rgb(220, 252, 231); }
+.mr-3 { margin-right: 0.75rem; }
+
+.text-green-600 { color: rgb(22, 163, 74); }
+.font-medium { font-weight: 500; }
+
+/* Animation pour les transitions */
+.transition-opacity {
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+  
+  .scale-enter-active {
+    animation: scale-in 0.2s ease-out;
+  }
+  
+  .scale-leave-active {
+    animation: scale-in 0.2s ease-in reverse;
+  }
+  
+  @keyframes scale-in {
+    from {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }

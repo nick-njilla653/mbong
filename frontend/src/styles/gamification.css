@@ -1,0 +1,91 @@
+/* src/styles/gamification.css */
+.achievement-popup {
+    @apply max-w-sm w-full mx-auto;
+  }
+  
+ /* src/styles/gamification.css */
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+.space-x-3 > * + * {
+  margin-left: 0.75rem;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.p-3 {
+  padding: 0.75rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
+.w-6 {
+  width: 1.5rem;
+}
+
+.h-6 {
+  height: 1.5rem;
+}
+
+.w-8 {
+  width: 2rem;
+}
+
+.h-8 {
+  height: 2rem;
+}
+
+.bg-green-50 {
+  background-color: rgb(236, 253, 245);
+}
+
+.bg-gray-50 {
+  background-color: rgb(249, 250, 251);
+}
+
+.bg-green-100 {
+  background-color: rgb(220, 252, 231);
+}
+
+.bg-gray-200 {
+  background-color: rgb(229, 231, 235);
+}
+
+.text-green-600 {
+  color: rgb(22, 163, 74);
+}
+
+.text-gray-600 {
+  color: rgb(75, 85, 99);
+}
+
+.text-yellow-500 {
+  color: rgb(234, 179, 8);
+}
+
+.text-orange-500 {
+  color: rgb(249, 115, 22);
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}

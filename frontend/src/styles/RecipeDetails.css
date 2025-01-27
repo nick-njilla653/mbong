@@ -1,0 +1,32 @@
+/* src/styles/RecipeDetails.css */
+.recipe-step {
+    @apply p-4 rounded-lg mb-4 transition-all;
+  }
+  
+  .recipe-step.current {
+    @apply bg-green-50 border-2 border-green-500;
+  }
+  
+  .recipe-step.completed {
+    @apply bg-gray-50;
+  }
+  
+  .recipe-step.locked {
+    @apply bg-white;
+  }
+  
+/* Common animations */
+@keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-slide-in {
+    animation: slideIn 0.3s ease-out;
+  }

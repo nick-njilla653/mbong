@@ -1,0 +1,228 @@
+/* src/styles/RecipeDetail.css */
+
+/* Layout */
+.flex {
+    display: flex;
+   }
+   
+   .items-center {
+    align-items: center;
+   }
+   
+   .justify-center {
+    justify-content: center;
+   }
+   
+   .justify-between {
+    justify-content: space-between;
+   }
+   
+   .space-x-4 > * + * {
+    margin-left: 1rem;
+   }
+   
+   .space-x-2 > * + * {
+    margin-left: 0.5rem;
+   }
+   
+   .space-y-2 > * + * {
+    margin-top: 0.5rem;
+   }
+   
+   /* Dimensions */
+   .h-screen {
+    height: 100vh;
+   }
+   
+   .w-5 {
+    width: 1.25rem;
+   }
+   
+   .h-5 {
+    height: 1.25rem;
+   }
+   
+   /* Marges */
+   .p-4 {
+    padding: 1rem;
+   }
+   
+   .mb-6 {
+    margin-bottom: 1.5rem;
+   }
+   
+   .mb-2 {
+    margin-bottom: 0.5rem;
+   }
+   
+   .mb-3 {
+    margin-bottom: 0.75rem;
+   }
+   
+   .mr-1 {
+    margin-right: 0.25rem;
+   }
+   
+   /* Typographie */
+   .text-2xl {
+    font-size: 1.5rem;
+   }
+   
+   .text-xl {
+    font-size: 1.25rem;
+   }
+   
+   .text-sm {
+    font-size: 0.875rem;
+   }
+   
+   .font-bold {
+    font-weight: 700;
+   }
+   
+   /* Couleurs */
+   .text-gray-600 {
+    color: rgb(75, 85, 99);
+   }
+   
+   .text-green-600 {
+    color: rgb(22, 163, 74);
+   }
+   
+   .text-green-800 {
+    color: rgb(22, 101, 52);
+   }
+   
+   .bg-green-100 {
+    background-color: rgb(220, 252, 231);
+   }
+   
+   /* Bordures et Arrondis */
+   .rounded-full {
+    border-radius: 9999px;
+   }
+   
+   /* Padding pour les badges et étiquettes */
+   .px-2 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+   }
+   
+   .py-1 {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+   }
+   
+   /* Listes */
+   .list-none {
+    list-style-type: none;
+   }
+   
+   /* États de chargement */
+   .loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+   }
+   
+   /* Image de la recette */
+   .recipe-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+   }
+   
+   /* Ingrédients */
+   .ingredient-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid rgb(229, 231, 235);
+   }
+   
+   /* Étapes de la recette */
+   .step-container {
+    border: 1px solid rgb(229, 231, 235);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+   }
+   
+   .step-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+   }
+   
+   .step-number {
+    background-color: rgb(220, 252, 231);
+    color: rgb(22, 163, 74);
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    font-weight: bold;
+   }
+   
+   .step-duration {
+    display: flex;
+    align-items: center;
+    color: rgb(107, 114, 128);
+    font-size: 0.875rem;
+   }
+   
+   .step-description {
+    color: rgb(31, 41, 55);
+    line-height: 1.5;
+   }
+   
+   .step-tip {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background-color: rgb(254, 243, 199);
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    color: rgb(146, 64, 14);
+   }
+   
+   /* Information nutritionnelle */
+   .nutrition-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+   }
+   
+   .nutrition-item {
+    background-color: rgb(243, 244, 246);
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    text-align: center;
+   }
+   
+   /* Boutons d'action */
+   .action-button {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    background-color: rgb(22, 163, 74);
+    color: white;
+    font-weight: 600;
+    text-align: center;
+    transition: background-color 0.2s;
+   }
+   
+   .action-button:hover {
+    background-color: rgb(21, 128, 61);
+   }
+   
+   .action-button:disabled {
+    background-color: rgb(229, 231, 235);
+    cursor: not-allowed;
+   }

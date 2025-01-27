@@ -1,0 +1,95 @@
+/* src/styles/gamification-nav.css */
+.fixed {
+    position: fixed;
+  }
+  
+  .bottom-0 {
+    bottom: 0;
+  }
+  
+  .left-0 {
+    left: 0;
+  }
+  
+  .right-0 {
+    right: 0;
+  }
+  
+  .bg-white {
+    background-color: white;
+  }
+  
+  .border-t {
+    border-top-width: 1px;
+  }
+  
+  .border-gray-200 {
+    border-color: rgb(229, 231, 235);
+  }
+  
+  .p-2 {
+    padding: 0.5rem;
+  }
+  
+  .flex {
+    display: flex;
+  }
+  
+  .flex-col {
+    flex-direction: column;
+  }
+  
+  .items-center {
+    align-items: center;
+  }
+  
+  .justify-around {
+    justify-content: space-around;
+  }
+  
+  .w-6 {
+    width: 1.5rem;
+  }
+  
+  .h-6 {
+    height: 1.5rem;
+  }
+  
+  .text-xs {
+    font-size: 0.75rem;
+  }
+  
+  .text-green-600 {
+    color: rgb(22, 163, 74);
+  }
+  
+  .text-orange-500 {
+    color: rgb(249, 115, 22);
+  }
+  
+  .text-yellow-500 {
+    color: rgb(234, 179, 8);
+  }
+  
+  /* Animation pour les transitions de page */
+  .page-transition-enter {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  
+  .page-transition-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 300ms, transform 300ms;
+  }
+  
+  .page-transition-exit {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  .page-transition-exit-active {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 300ms, transform 300ms;
+  }
