@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   IonTabs,
+  IonButton,
   IonIcon,
   IonLabel,
   IonTabBar,
@@ -12,7 +13,7 @@ import {
   IonContent,
   IonPage
 } from '@ionic/react';
-import { home, book, trophy, person, settings, restaurant } from 'ionicons/icons';
+import { home, book, trophy, person, settings, restaurant, add, calculator } from 'ionicons/icons';
 import { Route, Redirect } from 'react-router-dom';
 import { Card, CardHeader, CardContent } from '../components/ui/card';
 import Profile from './Profile';
@@ -25,7 +26,7 @@ import RecipesPage from './RecipePage';
 import RecipeQuiz from '../components/features/quiz/RecipeQuiz';
 import { Recipe } from '../types';
 import { RecipeService } from '../services/recipe.service';
-
+import MealComposer from './MealComposer';
 
 const MainNavigation: React.FC = () => {
   const [currentXP, setCurrentXP] = useState(0);
@@ -86,6 +87,37 @@ const MainNavigation: React.FC = () => {
 
           {/* Contenu principal */}
           <div className="flex-1 overflow-y-auto p-4">
+            {/* Actions rapides - AJOUTEZ ICI */}
+            <Card className="mb-4">
+              <CardHeader>
+                <h2 className="text-xl font-bold">Actions rapides</h2>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 gap-4">
+                  <IonButton
+                    expand="block"
+                    routerLink="/app/meal-composer"
+                    className="h-24"
+                  >
+                    <div className="flex flex-col items-center">
+                      <IonIcon icon={calculator} className="w-8 h-8 mb-2" />
+                      <span>Composer un repas</span>
+                    </div>
+                  </IonButton>
+                  <IonButton
+                    expand="block"
+                    routerLink="/app/learning"
+                    className="h-24"
+                  >
+                    <div className="flex flex-col items-center">
+                      <IonIcon icon={book} className="w-8 h-8 mb-2" />
+                      <span>Commencer une leçon</span>
+                    </div>
+                  </IonButton>
+                </div>
+              </CardContent>
+            </Card>
+            {/* Parcours d'apprentissage */}
             <Card className="mb-4">
               <CardHeader>
                 <h2 className="text-xl font-bold">Parcours d'apprentissage</h2>
@@ -129,6 +161,7 @@ const MainNavigation: React.FC = () => {
             return <RecipeQuiz recipe={recipe} onComplete={handleQuizComplete} />;
           }}
         />
+        <Route exact path="/app/meal-composer" component={MealComposer} />
         <Route exact path="/app/profile" component={Profile} />
         <Route exact path="/app/settings" component={Settings} />
         <Route path="/app/gamification" component={GamificationRoutes} />
@@ -141,6 +174,10 @@ const MainNavigation: React.FC = () => {
         <IonTabButton tab="dashboard" href="/app/dashboard">
           <IonIcon icon={home} />
           <IonLabel>Accueil</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab="meal-composer" href="/app/meal-composer">
+          <IonIcon icon={calculator} />
+          <IonLabel>Composer</IonLabel>
         </IonTabButton>
         <IonTabButton tab="learning" href="/app/learning">
           <IonIcon icon={book} />

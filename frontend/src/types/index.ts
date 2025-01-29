@@ -151,6 +151,12 @@ export interface LearningProgress {
 
 
 // src/types/index.ts
+export interface RecipeIngredient {
+    name: string;
+    quantity: string;
+    unit?: string;
+  }
+
 export interface Recipe {
     id: string;
     title: string;
@@ -163,7 +169,7 @@ export interface Recipe {
     unlocked: boolean;
     progress: number;
     description: string;
-    ingredients: string[];
+    ingredients: RecipeIngredient[];
     steps:[];
     requiredLevel?: number;
     xpReward: number;
@@ -185,3 +191,49 @@ export interface Recipe {
     };
     status?: 'not_started' | 'in_progress' | 'completed'; // Pour suivre l'état de la recette
  }
+
+
+
+ // src/types/meal.ts
+export interface Ingredient {
+    id: string;
+    name: string;
+    imageUrl: string;
+    category: string;
+    nutritionFacts: {
+      calories: number;
+      proteins: number;
+      carbs: number;
+      fats: number;
+      vitamins: Record<string, number>;
+      minerals: Record<string, number>;
+    };
+    seasonality?: {
+      start: number;
+      end: number;
+    };
+    allergens?: string[];
+  }
+  
+  export interface NutritionalInfo {
+    calories: number;
+    proteins: number;
+    carbs: number;
+    fats: number;
+    vitamins: Record<string, number>;
+    minerals: Record<string, number>;
+    servingSize: string;
+  }
+  
+  export interface RecipeSuggestion {
+    recipe: Recipe;
+    nutritionalMatch: number;
+    missingIngredients: {
+      name: string;
+      quantity: string;
+    }[];
+    totalTime: number;
+    difficulty: 'easy' | 'medium' | 'hard';
+    unlocked: boolean;
+    requiredLevel?: number;
+  }

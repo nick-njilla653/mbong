@@ -1,0 +1,134 @@
+/* src/styles/meal-composer.css */
+.ingredient-card {
+    position: relative;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  
+  .ingredient-card.selected {
+    border: 2px solid var(--ion-color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .ingredient-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+  
+  .ingredient-card.selected::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(var(--ion-color-primary-rgb), 0.1);
+  }
+  
+  .ingredient-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .nutrition-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .nutrition-item {
+    text-align: center;
+    padding: 0.5rem;
+    background-color: var(--ion-color-light);
+    border-radius: 8px;
+  }
+  
+  .nutrition-value {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--ion-color-primary);
+  }
+  
+  .nutrition-label {
+    font-size: 0.875rem;
+    color: var(--ion-color-medium);
+  }
+  
+  .ingredient-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .ingredient-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--ion-color-light);
+  }
+  
+  .ingredient-quantity {
+    color: var(--ion-color-medium);
+    font-weight: 500;
+  }
+  
+  .step-indicator {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  
+  .step-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--ion-color-medium);
+    margin: 0 4px;
+  }
+  
+  .step-dot.active {
+    background-color: var(--ion-color-primary);
+    transform: scale(1.5);
+  }
+  
+  .meal-type-selection {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .recipe-card {
+    margin-bottom: 1rem;
+  }
+  
+  .recipe-card.locked {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  
+  .recipe-unlock-message {
+    text-align: center;
+    padding: 1rem;
+    background-color: var(--ion-color-light);
+    border-radius: 8px;
+    margin-top: 1rem;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+  }

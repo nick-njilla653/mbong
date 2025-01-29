@@ -1,37 +1,99 @@
-/* src/styles/Settings.css */
+/* src/styles/settings.css */
 .settings-section {
-    @apply mb-6;
-  }
-  
-  .settings-title {
-    @apply text-xl font-bold mb-4;
-  }
-  
-  .toggle-item {
-    @apply flex items-center justify-between p-4 border-b border-gray-200;
-  }
-  
-  .select-item {
-    @apply w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500;
-  }
-  
-  .save-button {
-    @apply px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors;
-  }
+  margin-bottom: 1rem;
+  background-color: #ffffff;
+}
 
-  
-/* Common animations */
-@keyframes slideIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .animate-slide-in {
-    animation: slideIn 0.3s ease-out;
-  }
+.section-header {
+  --background: #f4f5f8;
+  font-weight: 500;
+}
+
+ion-list {
+  padding: 0;
+}
+
+ion-item {
+  --padding-start: 1rem;
+  --padding-end: 1rem;
+  --padding-top: 0.75rem;
+  --padding-bottom: 0.75rem;
+}
+
+ion-item.section-header {
+  --padding-top: 1rem;
+  --padding-bottom: 1rem;
+}
+
+ion-icon {
+  font-size: 1.25rem;
+}
+
+ion-note {
+  color: var(--ion-color-medium);
+  font-size: 0.875rem;
+}
+
+ion-toggle {
+  --background: #ddd;
+  --background-checked: var(--ion-color-primary);
+  --handle-background: #fff;
+  --handle-background-checked: #fff;
+}
+
+ion-select {
+  --placeholder-color: var(--ion-color-medium);
+  min-width: 120px;
+}
+
+.ion-margin-vertical {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+ion-button {
+  --border-radius: 8px;
+  --padding-top: 1rem;
+  --padding-bottom: 1rem;
+}
+
+ion-button[color="danger"] {
+  --background: var(--ion-color-danger);
+  --color: #ffffff;
+}
+
+.ion-padding {
+  padding: 1rem;
+}
+
+/* Animation pour les toggles */
+ion-toggle {
+  transition: background-color 0.3s ease;
+}
+
+/* Style pour les items désactivés */
+ion-item[disabled] {
+  opacity: 0.5;
+}
+
+/* Animation pour les sélections */
+ion-select::part(text) {
+  transition: color 0.2s ease;
+}
+
+/* Style pour les notes */
+ion-note {
+  font-style: italic;
+}
+
+/* Style pour les icons dans les items */
+ion-item ion-icon[slot="start"] {
+  margin-right: 1rem;
+  color: var(--ion-color-primary);
+}
+
+/* Style pour les labels des sections */
+ion-item.section-header ion-label {
+  font-weight: bold;
+  color: var(--ion-color-dark);
+}
