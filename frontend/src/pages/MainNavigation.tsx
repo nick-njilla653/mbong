@@ -22,7 +22,7 @@ import { GamificationRoutes } from '../navigation/GamificationRoutes';
 import RecipeDetails from './RecipeDetails';
 import LearningPath from './LearningPath';
 import '../styles/MainNavigation.css';
-import RecipesPage from './RecipePage';
+import RecipesPage from './RecipesPage';
 import RecipeQuiz from '../components/features/quiz/RecipeQuiz';
 import { Recipe } from '../types';
 import { RecipeService } from '../services/recipe.service';

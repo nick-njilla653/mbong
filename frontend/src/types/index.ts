@@ -151,16 +151,62 @@ export interface LearningProgress {
 
 
 // src/types/index.ts
+
+export interface CulturalInfo {
+    region: string;
+    ethnicity: string;
+    occasions: string[];
+    culturalSignificance: string;
+    history?: string;
+    variations?: {
+        description: string;
+        region?: string;
+        ingredients?: string[];
+    }[];
+}
+
+export interface CookingStep extends Step {
+    category: 'preparation' | 'mainCooking' | 'sauce' | 'assembly';
+    ingredients: string[]; // IDs des ingrédients utilisés à cette étape
+    criticalPoints?: string[]; // Points importants à surveiller
+    temperature?: number;
+    equipmentNeeded?: string[];
+}
+
+export interface HealthInfo {
+    benefits: string[];
+    caloriesPerServing: number;
+    nutritionalHighlights: string[];
+    dietaryConsiderations: string[];
+}
+
 export interface RecipeIngredient {
     name: string;
     quantity: string;
-    unit?: string;
-  }
+    unit: string;
+    isOptional: boolean;
+    category: 'main' | 'sauce' | 'accompaniment';
+    seasonalityInfo?: {
+        bestSeasons: ('spring' | 'summer' | 'autumn' | 'winter')[];
+        notes?: string;
+    };
+    nutritionalInfo?: {
+        caloriesPer100g: number;
+        proteinsPer100g: number;
+        carbohydratesPer100g: number;
+        lipidsPer100g: number;
+    };
+    substitutes?: string[];
+    preparationNotes?: string;
+    storageInstructions?: string;
+}
+
 
 export interface Recipe {
     id: string;
     title: string;
     name: string; // Pour compatibilité avec l'affichage
+    alternateName?: string[];
     difficulty: 'easy' | 'medium' | 'hard';
     region: string;
     duration: number;
@@ -169,17 +215,72 @@ export interface Recipe {
     unlocked: boolean;
     progress: number;
     description: string;
-    ingredients: RecipeIngredient[];
-    steps:[];
+    healthInfo: HealthInfo;
+    culturalInfo: CulturalInfo;
+    ingredients: {
+        main: RecipeIngredient[];
+        sauce?: RecipeIngredient[];
+        accompaniment?: RecipeIngredient[];
+    };
+    steps: {
+        preparation: CookingStep[];
+        mainCooking: CookingStep[];
+        sauce?: CookingStep[];
+        assembly: CookingStep[];
+    };
     requiredLevel?: number;
     xpReward: number;
-    nutritionFacts?: {
-        calories: number;
-        protein: number;
-        carbs: number;
-        fat: number;
+    nutritionFacts: {
+        perServing: {
+            calories: number;
+            proteins: number;
+            lipids: number;
+            carbohydrates: number;
+            fiber: number;
+            vitamins?: Record<string, number>;
+            minerals?: Record<string, number>;
+        };
+        totalRecipe?: {
+            calories: number;
+            proteins: number;
+            lipids: number;
+            carbohydrates: number;
+            fiber: number;
+        };
     };
-    servings: number;
+
+    tips: {
+        preparation?: string[];
+        cooking?: string[];
+        storage?: string[];
+        reheating?: string[];
+    };
+
+    substitutions: {
+        ingredient: string;
+        alternatives: {
+            name: string;
+            proportion: string;
+            notes?: string;
+        }[];
+    }[];
+    // Métadonnées supplémentaires
+    complexity: {
+        techniqueLevel: 'beginner' | 'intermediate' | 'advanced';
+        equipmentNeeded: string[];
+        criticalSteps: number[];
+    };
+
+    seasonality?: {
+        bestMonths: number[];
+        availableAllYear: boolean;
+    };
+
+    servings: {
+        min: number;
+        max: number;
+        defaultSize: number;
+    };
     prepTime: number; // Temps de préparation spécifique
     cookTime: number; // Temps de cuisson spécifique
     totalTime: number; // Temps total (prep + cuisson)
@@ -190,32 +291,32 @@ export interface Recipe {
         count: number;
     };
     status?: 'not_started' | 'in_progress' | 'completed'; // Pour suivre l'état de la recette
- }
+}
 
 
 
- // src/types/meal.ts
+// src/types/meal.ts
 export interface Ingredient {
     id: string;
     name: string;
     imageUrl: string;
     category: string;
     nutritionFacts: {
-      calories: number;
-      proteins: number;
-      carbs: number;
-      fats: number;
-      vitamins: Record<string, number>;
-      minerals: Record<string, number>;
+        calories: number;
+        proteins: number;
+        carbs: number;
+        fats: number;
+        vitamins: Record<string, number>;
+        minerals: Record<string, number>;
     };
     seasonality?: {
-      start: number;
-      end: number;
+        start: number;
+        end: number;
     };
     allergens?: string[];
-  }
-  
-  export interface NutritionalInfo {
+}
+
+export interface NutritionalInfo {
     calories: number;
     proteins: number;
     carbs: number;
@@ -223,17 +324,17 @@ export interface Ingredient {
     vitamins: Record<string, number>;
     minerals: Record<string, number>;
     servingSize: string;
-  }
-  
-  export interface RecipeSuggestion {
+}
+
+export interface RecipeSuggestion {
     recipe: Recipe;
     nutritionalMatch: number;
     missingIngredients: {
-      name: string;
-      quantity: string;
+        name: string;
+        quantity: string;
     }[];
     totalTime: number;
     difficulty: 'easy' | 'medium' | 'hard';
     unlocked: boolean;
     requiredLevel?: number;
-  }
+}

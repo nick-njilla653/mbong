@@ -41,7 +41,7 @@ import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Quiz from './components/features/quiz/Quiz';
 import RecipeSteps from './components/features/recipe/RecipeSteps';
-import RecipesPage from './pages/RecipePage';
+import RecipesPage from './pages/RecipesPage';
 import RecipeLesson from './components/learning/RecipeLesson';
 import { GamificationProvider } from './contexts/GamificationContext';
 import './theme/variables.css';
