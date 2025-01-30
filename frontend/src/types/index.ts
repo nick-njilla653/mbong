@@ -151,6 +151,11 @@ export interface LearningProgress {
 
 
 // src/types/index.ts
+export interface CulturalVariation {
+    region?: string;
+    description: string;
+    ingredients?: string[];
+}
 
 export interface CulturalInfo {
     region: string;
@@ -158,11 +163,7 @@ export interface CulturalInfo {
     occasions: string[];
     culturalSignificance: string;
     history?: string;
-    variations?: {
-        description: string;
-        region?: string;
-        ingredients?: string[];
-    }[];
+    variations?: CulturalVariation[];
 }
 
 export interface CookingStep extends Step {

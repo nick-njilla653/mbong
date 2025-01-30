@@ -1,0 +1,31 @@
+
+Exemple d'utilisation dans un contrôleur ou un service :
+
+```typescript
+async function createCameroonianRecipe() {
+  const recipeService = new RecipeService();
+  
+  try {
+    const newRecipe = await recipeService.createRecipe({
+      title: "Poulet DG",
+      // ... autres détails
+    });
+    
+    // Ajouter une variante régionale
+    await recipeService.addRegionalVariant(newRecipe.id, {
+      region: "Yaoundé",
+      ingredients: { /* variantes */ },
+      technique: "Préparation spécifique à Yaoundé"
+    });
+    
+    // Rechercher des recettes
+    const recipes = await recipeService.searchRecipes({
+      region: "Centre",
+      difficulty: "MEDIUM"
+    });
+  } catch (error) {
+    console.error("Erreur lors de la création de la recette", error);
+  }
+}
+```
+

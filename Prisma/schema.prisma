@@ -1,0 +1,258 @@
+// prisma/schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Énumérations
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum RecipeStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum UserRole {
+  USER
+  ADMIN
+  CHEF
+}
+
+// Utilisateur
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  firstName String?
+  lastName  String?
+  avatar    String?
+  role      UserRole @default(USER)
+
+  profile UserProfile?
+  stats   UserStats?
+
+  dietaryPreferences DietaryPreference?
+  userRecipes        UserRecipe[]
+  completedRecipes   CompletedRecipe[]
+  learningPaths      UserLearningPath[]
+  comments RecipeComment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserProfile {
+  id       String  @id @default(uuid())
+  userId   String  @unique
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  region   String?
+  bio      String?
+  language String?
+}
+
+model UserStats {
+  id               String @id @default(uuid())
+  userId           String @unique
+  user             User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  level            Int    @default(1)
+  xp               Int    @default(0)
+  totalRecipesMade Int    @default(0)
+}
+
+model DietaryPreference {
+  id         String   @id @default(uuid())
+  userId     String   @unique
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vegetarian Boolean  @default(false)
+  vegan      Boolean  @default(false)
+  allergies  String[]
+}
+
+// Recette
+model Recipe {
+  id          String      @id @default(uuid())
+  title       String
+  description String
+  region      String
+  category    String
+  difficulty  Difficulty
+  
+  ingredients Json // Stockage flexible des ingrédients
+  steps       Json // Stockage flexible des étapes
+  
+  cookingTime Json
+  servings    Json
+  
+  nutritionFacts Json
+  culturalInfo   Json
+  healthInfo     Json
+  
+  tags        String[]
+  imageUrl    String?
+  
+  requiredLevel Int?
+  xpReward     Int?
+
+  comments       RecipeComment[]
+  averageRating Float?           @default(0)
+  
+  completedRecipes CompletedRecipe[]
+
+  userRecipes       UserRecipe[]
+  completedRecipes  CompletedRecipe[]
+  learningPathItems LearningPathItem[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+   // Enrichissement culturel et contextuel
+  culturalContext Json {
+    communities      String[] // Ex: ["Maka", "Gbaya"]
+    historicalOrigin String?
+    socialContext    String? // Contexte de préparation
+    sharingTradition String? // Tradition de partage
+  }
+
+  preparationDetails Json {
+    preparationTime  Int?     // Temps de préparation en minutes
+    cookingTime      Int?     // Temps de cuisson
+    difficultyNotes  String?  // Notes spécifiques de préparation
+  }
+
+  nutritionalProfile Json {
+    macronutrients Json {
+      proteins   Float
+      lipids     Float
+      carbs      Float
+      fibers     Float
+    }
+    micronutrients Json? // Vitamines, minéraux
+    healthBenefits String[]
+  }
+
+  dietaryOptions Json {
+    vegetarianVariations String[]
+    localSubstitutions   Json // Possibilités de remplacement local
+  }
+
+  // Nouvelle relation pour les variantes régionales
+  regionalVariants RecipeRegionalVariant[]
+}
+
+// Modèle pour les commentaires de recettes
+model RecipeComment {
+  id        String   @id @default(uuid())
+  recipeId  String
+  recipe    Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  content   String
+  rating    Int      // Note de 1 à 5
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, recipeId])
+}
+
+
+// Pour capturer les variations régionales
+model RecipeRegionalVariant {
+  id          String @id @default(uuid())
+  recipeId    String
+  recipe      Recipe @relation(fields: [recipeId], references: [id])
+  region      String
+  ingredients Json   // Variations d'ingrédients
+  technique   String? // Différences de technique
+}
+
+// Ingrédient
+model Ingredient {
+  id               String   @id @default(uuid())
+  name             String   @unique
+  nameVariants     String[]
+  description      String?
+  region           String?
+  nutritionalValue Json
+  seasonality      Json?
+  imageUrl         String?
+  tags             String[]
+}
+
+// Relation utilisateur-recette
+model UserRecipe {
+  id         String       @id @default(uuid())
+  userId     String
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipeId   String
+  recipe     Recipe       @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  status     RecipeStatus @default(NOT_STARTED)
+  
+  personalNotes String?
+  rating        Int?
+  dateCooked    DateTime?
+  variations    String[]
+
+  @@unique([userId, recipeId])
+}
+
+// Recettes complétées
+model CompletedRecipe {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipeId   String
+  recipe     Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  
+  completedAt DateTime @default(now())
+  
+  @@unique([userId, recipeId])
+}
+
+// Parcours d'apprentissage
+model LearningPath {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  category    String
+  requiredXP  Int
+  
+  items       LearningPathItem[]
+  userPaths   UserLearningPath[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model LearningPathItem {
+  id             String      @id @default(uuid())
+  learningPathId String
+  learningPath   LearningPath @relation(fields: [learningPathId], references: [id], onDelete: Cascade)
+  recipeId       String
+  recipe         Recipe       @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  order          Int
+}
+
+model UserLearningPath {
+  id             String        @id @default(uuid())
+  userId         String
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  learningPathId String
+  learningPath   LearningPath  @relation(fields: [learningPathId], references: [id], onDelete: Cascade)
+  
+  status         String        @default("in_progress")
+  completedAt    DateTime?
+  
+  @@unique([userId, learningPathId])
+}

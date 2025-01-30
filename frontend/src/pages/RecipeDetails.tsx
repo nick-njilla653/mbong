@@ -18,7 +18,7 @@ import { useParams } from 'react-router-dom';
 import { restaurant, book, leaf, information, timerOutline, locationOutline } from 'ionicons/icons';
 import { Card, CardContent } from '../components/ui/card';
 import { ProgressBar } from '../components/ui/ProgressBar';
-import { Recipe, CookingStep } from '../types';
+import { Recipe, CulturalVariation } from '../types';
 import '../styles/RecipeDetails.css';
 
 const RecipeDetails: React.FC = () => {
@@ -200,21 +200,31 @@ const RecipeDetails: React.FC = () => {
     <Card className="mb-4">
       <CardContent>
         <h2 className="text-xl font-bold mb-4">Histoire et Culture</h2>
-        <p className="mb-4">{recipe?.culturalInfo.culturalSignificance}</p>
-        {recipe?.culturalInfo.history && (
+        <p className="mb-4">{recipe?.culturalInfo?.culturalSignificance}</p>
+        {recipe?.culturalInfo?.history && (
           <div className="mb-4">
             <h3 className="font-semibold mb-2">Histoire</h3>
             <p>{recipe.culturalInfo.history}</p>
           </div>
         )}
-        {recipe?.culturalInfo.variations && (
+        {recipe?.culturalInfo?.variations && (
           <div>
             <h3 className="font-semibold mb-2">Variantes régionales</h3>
             <div className="space-y-2">
-              {recipe.culturalInfo.variations.map((variation, index) => (
+              {recipe.culturalInfo.variations.map((variation: CulturalVariation, index: number) => (
                 <div key={index} className="p-3 bg-gray-50 rounded-lg">
-                  <h4 className="font-medium">{variation.region}</h4>
+                  {variation.region && <h4 className="font-medium">{variation.region}</h4>}
                   <p className="text-sm text-gray-600">{variation.description}</p>
+                  {variation.ingredients && (
+                    <div className="mt-2">
+                      <p className="text-sm font-medium">Ingrédients spécifiques :</p>
+                      <ul className="list-disc pl-4 text-sm text-gray-600">
+                        {variation.ingredients.map((ingredient, i) => (
+                          <li key={i}>{ingredient}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

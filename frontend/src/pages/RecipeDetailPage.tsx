@@ -16,12 +16,11 @@ import {
 import { useParams } from 'react-router-dom';
 import { timer, checkmark, ribbon, time } from 'ionicons/icons';
 import { RecipeService } from '../services/recipe.service';
-import { Recipe } from '../types';
+import { Recipe, CookingStep, RecipeIngredient } from '../types';
 import RecipeSteps from '../components/features/recipe/RecipeSteps';
 import { useAuth } from '../contexts/AuthContext';
 import { useGamification } from '../contexts/GamificationContext';
 import '../styles/RecipeDetailPage.css';
-
 
 const RecipeDetailPage: React.FC = () => {
   const [recipe, setRecipe] = useState<Recipe | null>(null);
@@ -50,11 +49,19 @@ const RecipeDetailPage: React.FC = () => {
   const handleStepComplete = async (stepIndex: number) => {
     if (!recipe) return;
 
+    // Flatten all steps to get total step count
+    const allSteps = [
+      ...recipe.steps.preparation,
+      ...recipe.steps.mainCooking,
+      ...(recipe.steps.sauce || []),
+      ...recipe.steps.assembly
+    ];
+
     try {
       setCurrentStep(stepIndex + 1);
-      await RecipeService.updateRecipeProgress(id, ((stepIndex + 1) / recipe.steps.length) * 100);
+      await RecipeService.updateRecipeProgress(id, ((stepIndex + 1) / allSteps.length) * 100);
 
-      if (stepIndex + 1 === recipe.steps.length) {
+      if (stepIndex + 1 === allSteps.length) {
         // La recette est terminée
         await updateProgress(id, 'completed');
         // Rediriger vers le quiz ou la page de félicitations
@@ -77,6 +84,13 @@ const RecipeDetailPage: React.FC = () => {
     return <div>Recette non trouvée</div>;
   }
 
+  // Flatten all ingredients
+  const allIngredients = [
+    ...recipe.ingredients.main,
+    ...(recipe.ingredients.sauce || []),
+    ...(recipe.ingredients.accompaniment || [])
+  ];
+
   return (
     <IonPage>
       <IonHeader>
@@ -84,7 +98,7 @@ const RecipeDetailPage: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton defaultHref="/app/learning" />
           </IonButtons>
-          <IonTitle>{recipe.name}</IonTitle>
+          <IonTitle>{recipe.title}</IonTitle>
           <IonButtons slot="end">
             <IonButton onClick={() => router.push(`/app/recipe/${id}/info`)}>
               <IonIcon slot="icon-only" icon={ribbon} />
@@ -97,11 +111,11 @@ const RecipeDetailPage: React.FC = () => {
         <div className="p-4">
           {/* En-tête de la recette */}
           <div className="mb-6">
-            <h1 className="text-2xl font-bold mb-2">{recipe.name}</h1>
+            <h1 className="text-2xl font-bold mb-2">{recipe.title}</h1>
             <div className="flex items-center space-x-4 text-gray-600">
               <div className="flex items-center">
                 <IonIcon icon={time} className="w-5 h-5 mr-1" />
-                <span>{recipe.duration} min</span>
+                <span>{recipe.totalTime} min</span>
               </div>
               <div className="flex items-center">
                 <IonIcon icon={ribbon} className="w-5 h-5 mr-1" />
@@ -119,10 +133,10 @@ const RecipeDetailPage: React.FC = () => {
           <div className="mb-6">
             <h2 className="text-xl font-bold mb-3">Ingrédients</h2>
             <ul className="space-y-2">
-              {recipe.ingredients?.map((ingredient, index) => (
+              {allIngredients.map((ingredient: RecipeIngredient, index: number) => (
                 <li key={index} className="flex items-center space-x-2">
                   <span className="text-green-600">•</span>
-                  <span>{ingredient}</span>
+                  <span>{ingredient.name} - {ingredient.quantity}</span>
                 </li>
               ))}
             </ul>
@@ -132,7 +146,12 @@ const RecipeDetailPage: React.FC = () => {
           <div>
             <h2 className="text-xl font-bold mb-3">Instructions</h2>
             <RecipeSteps
-              steps={recipe.steps || []}
+              steps={[
+                ...recipe.steps.preparation,
+                ...recipe.steps.mainCooking,
+                ...(recipe.steps.sauce || []),
+                ...recipe.steps.assembly
+              ]}
               currentStep={currentStep}
               onStepComplete={handleStepComplete}
             />
