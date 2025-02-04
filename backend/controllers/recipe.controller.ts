@@ -1,19 +1,27 @@
 // src/controllers/recipe.controller.ts
 import { Request, Response } from 'express';
-import { PrismaClient, Prisma, Difficulty } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 import { z } from 'zod';
 
 const prisma = new PrismaClient();
 
+// Définir manuellement l'énumération de difficulté
+type Difficulty = 'EASY' | 'MEDIUM' | 'HARD';
+
 // Tipos manuels pour remplacer les types Prisma non résolus
 type JsonObject = { [key: string]: any };
-type RecipeWhereInput = {
-    region?: string;
-    difficulty?: Difficulty;
-    tags?: { hasSome?: string[] };
-    // Adicione outros campos conforme necessário
+
+export type RecipeWhereInput = {
+  region?: string;
+  difficulty?: Difficulty;
+  tags?: { hasSome?: string[] };
+  nutritionFacts?: {
+      path: string[];
+      gte?: number;
+      lte?: number;
   };
-type EnumDifficultyFilter = 'EASY' | 'MEDIUM' | 'HARD';
+};
+export type EnumDifficultyFilter = 'EASY' | 'MEDIUM' | 'HARD';
 
 // Schéma de validation pour l'ajout/mise à jour de recette
 const RecipeSchema = z.object({
@@ -74,6 +82,49 @@ const RecipeSchema = z.object({
   });
 
   export class RecipeController {
+
+    // Créer toutes les recettes
+
+    static async createRecipe(req: Request, res: Response) {
+      try {
+        const validatedData = RecipeSchema.parse(req.body);
+    
+        const recipe = await prisma.recipe.create({
+          data: {
+            title: validatedData.title,
+            description: validatedData.description,
+            region: validatedData.region,
+            difficulty: validatedData.difficulty,
+            ingredients: validatedData.ingredients as JsonObject,
+            steps: validatedData.steps as JsonObject,
+            culturalInfo: validatedData.culturalInfo as JsonObject,
+            nutritionFacts: validatedData.nutritionFacts as JsonObject,
+            tags: validatedData.tags,
+            imageUrl: validatedData.imageUrl
+          }
+        });
+    
+        res.status(201).json({
+          message: 'Recette créée avec succès',
+          recipe
+        });
+      } catch (error) {
+        console.error(error);
+        
+        if (error instanceof z.ZodError) {
+          return res.status(400).json({
+            message: 'Erreur de validation',
+            errors: error.errors
+          });
+        }
+    
+        res.status(500).json({ 
+          message: 'Erreur lors de la création de la recette',
+          error: error instanceof Error ? error.message : error
+        });
+      }
+    }
+
     // Récupérer toutes les recettes
     static async getAllRecipes(req: Request, res: Response) {
       try {
@@ -249,11 +300,11 @@ const RecipeSchema = z.object({
         limit = 10 
       } = req.query;
 
-      const where: Prisma.RecipeWhereInput = {};
+      const where: RecipeWhereInput = {};
 
       // Filtres
       if (region) where.region = region as string;
-      if (difficulty) where.difficulty = difficulty as Prisma.EnumDifficultyFilter;
+      if (difficulty) where.difficulty = difficulty as Difficulty;
       
       // Filtres nutritionnels
       if (minCalories || maxCalories) {

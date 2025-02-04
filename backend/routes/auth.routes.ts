@@ -14,7 +14,7 @@ import EmailService from '../services/email.service';
 
 const router = express.Router();
 const prisma = new PrismaClient();
-const emailService = new EmailService();
+const emailService = EmailService;
 
 // Schémas de validation Zod
 const RegisterSchema = z.object({

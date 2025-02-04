@@ -1,38 +1,44 @@
 // src/middleware/error-handler.ts
 import { Request, Response, NextFunction } from 'express';
-import { Prisma } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 import { ZodError } from 'zod';
 
 // Interface pour les erreurs personnalisées
 interface CustomError extends Error {
-    statusCode?: number;
-    code?: string;
-    errors?: any[];
-  }
+  statusCode?: number;
+  code?: string;
+  errors?: any[];
+}
 
 export const errorHandler = (
-  err: CustomError, 
-  req: Request, 
-  res: Response, 
+  err: CustomError,
+  req: Request,
+  res: Response,
   next: NextFunction
 ) => {
   console.error(err);
 
   // Gestion des erreurs Prisma
-  if (err instanceof Prisma.PrismaClientKnownRequestError) {
+  if (err instanceof Error && 'code' in err) {
     switch (err.code) {
       case 'P2002': // Violation de contrainte unique
         return res.status(409).json({
           message: 'Une ressource avec ces informations existe déjà',
           error: 'Conflict'
         });
-      
+
       case 'P2025': // Enregistrement non trouvé
         return res.status(404).json({
           message: 'Ressource non trouvée',
           error: 'Not Found'
         });
-      
+
+      case 'P2003': // Violation de contrainte de clé étrangère
+        return res.status(400).json({
+          message: 'La ressource est liée à d\'autres enregistrements',
+          error: 'Constraint Violation'
+        });
+
       default:
         return res.status(500).json({
           message: 'Erreur de base de données',
@@ -40,7 +46,6 @@ export const errorHandler = (
         });
     }
   }
-
   // Gestion des erreurs Zod (validation)
   if (err instanceof ZodError) {
     return res.status(400).json({
