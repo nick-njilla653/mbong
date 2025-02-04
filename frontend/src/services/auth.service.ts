@@ -60,68 +60,46 @@ const TEST_USERS = [
   }
  }
 
-// export class AuthService {
-//   private static TOKEN_KEY = 'mbong_token';
-//   private static USER_KEY = 'mbong_user';
 
-//   static async login(email: string, password: string): Promise<UserProfile> {
-//     try {
-//       // Simulation d'appel API
-//       const response = await fetch('/api/auth/login', {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({ email, password }),
-//       });
-      
-//       if (!response.ok) throw new Error('Échec de connexion');
-      
-//       const data = await response.json();
-//       this.setToken(data.token);
-//       this.setUser(data.user);
-//       return data.user;
-//     } catch (error) {
-//       throw new Error('Erreur de connexion');
-//     }
-//   }
+/*  
+// src/services/tokenService.ts
+import { authService } from '../../API/api';
 
-//   static async register(formData: AuthFormData): Promise<UserProfile> {
-//     try {
-//       const response = await fetch('/api/auth/register', {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify(formData),
-//       });
-      
-//       if (!response.ok) throw new Error("Échec de l'inscription");
-      
-//       const data = await response.json();
-//       this.setToken(data.token);
-//       this.setUser(data.user);
-//       return data.user;
-//     } catch (error) {
-//       throw new Error("Erreur lors de l'inscription");
-//     }
-//   }
+class TokenService {
+  private refreshTokenTimeout?: NodeJS.Timeout;
 
-//   static logout(): void {
-//     localStorage.removeItem(this.TOKEN_KEY);
-//     localStorage.removeItem(this.USER_KEY);
-//   }
+  startTokenRefresh() {
+    // Refresh token 5 minutes before expiration
+    this.refreshTokenTimeout = setTimeout(async () => {
+      try {
+        const response = await authService.refreshToken();
+        localStorage.setItem('token', response.data.token);
+        this.startTokenRefresh(); // Schedule next refresh
+      } catch (error) {
+        // Logout user if refresh fails
+        this.stopTokenRefresh();
+        window.location.href = '/login';
+      }
+    }, this.getRefreshTime());
+  }
 
-//   private static setToken(token: string): void {
-//     localStorage.setItem(this.TOKEN_KEY, token);
-//   }
+  stopTokenRefresh() {
+    if (this.refreshTokenTimeout) {
+      clearTimeout(this.refreshTokenTimeout);
+    }
+  }
 
-//   private static setUser(user: UserProfile): void {
-//     localStorage.setItem(this.USER_KEY, JSON.stringify(user));
-//   }
+  private getRefreshTime(): number {
+    // Calculate time to refresh (20 minutes before expiration)
+    const token = localStorage.getItem('token');
+    if (!token) return 0;
 
-//   static getUser(): UserProfile | null {
-//     const user = localStorage.getItem(this.USER_KEY);
-//     return user ? JSON.parse(user) : null;
-//   }
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const expirationTime = payload.exp * 1000;
+    const currentTime = Date.now();
+    
+    return Math.max(expirationTime - currentTime - (20 * 60 * 1000), 0);
+  }
+}
 
-//   static isAuthenticated(): boolean {
-//     return !!localStorage.getItem(this.TOKEN_KEY);
-//   }
-// }
+export default new TokenService(); */
